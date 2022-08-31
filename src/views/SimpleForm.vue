@@ -1,73 +1,78 @@
 <template>
   <div>
-    <h1>Create an Event</h1>
-    <form action="">
-      <label for="">Select an category</label>
-      <select name="" id="" v-model="event.category">
-        <option v-for="option in categories" :key="option" :value="option" :selected="option === event.category">
-          {{ option }}
-        </option>
-      </select>
-      <h3>Name & describe your @leave=""</h3>
-      <label for="">Title</label>
-      <input type="text" v-model="event.title" class="field" placeholder="Title">
+    <h1>Create an event</h1>
+    <form>
 
-      <label for="">Description</label>
-      <input type="text" v-model="event.description" placeholder="Description" class="field">
+      <label>Select a category</label>
+      <select v-model="event.category">
+        <option v-for="option in categories" :value="option" :key="option" :selected="option === event.category">{{
+            option
+        }}</option>
+      </select>
+
+      <h3>Name & describe your event</h3>
+      <BaseInput v-model="event.title" label="Title" type="text" />
+      <BaseInput v-model="event.desciption" label="Description" type="text" />
 
       <h3>Where is your event?</h3>
-      <label for="">Location</label>
-      <input type="text" v-model="event.location" placeholder="Location" class="field">
+      <BaseInput v-model="event.location" label="Location" type="text" />
 
       <h3>Are pets allowed?</h3>
       <div>
-        <input type="radio" v-model="event.pets" :value="1" name="pets">
-        <label for="">Yes</label>
+        <input type="radio" v-model="event.pets" :value="1" name="pets" />
+        <label>Yes</label>
       </div>
+
       <div>
-        <input type="radio" v-model="event.pets" :value="0" name="pets">
-        <label for="">No</label>
+        <input type="radio" v-model="event.pets" :value="0" name="pets" />
+        <label>No</label>
       </div>
 
       <h3>Extras</h3>
       <div>
-        <input type="checkbox" v-model="event.extras.catering" class="field" name="pets">
-        <label for="">Catering</label>
+        <input type="checkbox" v-model="event.extras.catering" class="field" />
+        <label>Catering</label>
       </div>
+
       <div>
-        <input type="checkbox" v-model="event.extras.music" class="field" name="pets">
-        <label for="">Live music</label>
+        <input type="checkbox" v-model="event.extras.music" class="field" />
+        <label>Live music</label>
       </div>
-      <button class="button -fill-gradient" type="submit">Submit</button>
+
+      <button type="submit">Submit</button>
     </form>
+
+    <pre>{{ event }}</pre>
   </div>
 </template>
 
 <script>
-
+import BaseInput from '@/components/BaseInput.vue';
 export default {
-  name: "SimpleForm",
-  data: () => ({
-    categories: [
-      'sustainability',
-      'nature',
-      'animal welfare',
-      'hausing',
-      'education',
-      'food',
-      'community'
-    ],
-    event: {
-      category: '',
-      title: '',
-      description: '',
-      location: '',
-      pets: 1,
-      extras: {
-        catering: false,
-        music: false
+  data() {
+    return {
+      categories: [
+        "sustainability",
+        "nature",
+        "animal welfare",
+        "housing",
+        "education",
+        "food",
+        "community"
+      ],
+      event: {
+        category: "",
+        title: "",
+        description: "",
+        location: "",
+        pets: 1,
+        extras: {
+          catering: false,
+          music: false
+        }
       }
-    }
-  })
-};
+    };
+  },
+  components: { BaseInput }
+}
 </script>
