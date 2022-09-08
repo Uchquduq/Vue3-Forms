@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Create an event</h1>
-    <form>
+    <form @submit.prevent="post">
       <BaseSelect :options="categories" v-model="event.category" label="Select a category" />
 
       <h3>Name & describe your event</h3>
@@ -13,13 +13,11 @@
 
       <h3>Are pets allowed?</h3>
       <div>
-        <input type="radio" v-model="event.pets" :value="1" name="pets" />
-        <label>Yes</label>
+        <BaseRadio v-model="event.pets" name="pets" :value="1" label="Yes" />
       </div>
 
       <div>
-        <input type="radio" v-model="event.pets" :value="0" name="pets" />
-        <label>No</label>
+        <BaseRadio v-model="event.pets" name="pets" :value="0" label="No" />
       </div>
 
       <h3>Extras</h3>
@@ -42,6 +40,8 @@
 import BaseInput from '@/components/BaseInput';
 import BaseSelect from '@/components/BaseSelect';
 import BaseCheckbox from '@/components/BaseCheckbox';
+import EventService from '@/services/EventService';
+import BaseRadio from '@/components/BaseRadio.vue';
 export default {
   data() {
     return {
@@ -67,6 +67,13 @@ export default {
       }
     };
   },
-  components: { BaseInput, BaseSelect, BaseCheckbox }
+  components: { BaseInput, BaseSelect, BaseCheckbox, BaseRadio },
+  methods: {
+    post() {
+      EventService.postEvent(this.event)
+        .then((response) => (console.log(response.data)))
+        .catch((error) => console.log(error));
+    }
+  }
 }
 </script>
